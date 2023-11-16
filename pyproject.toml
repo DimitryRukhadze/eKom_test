@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "ecom-test-task"
+version = "0.1.0"
+description = "test task for eKom"
+authors = ["Dimitry Rukhadze"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^4.2.7"
+tinydb = "^4.8.0"
+djangorestframework = "^3.14.0"
+environs = "^9.5.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

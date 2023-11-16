@@ -1,0 +1,6 @@
+{
+  "_default": {
+    "1": {"template_name": "new_user_register", "user_name": "text", "new_user_email": "email", "new_user_phone": "phone"},
+    "2": {"template_name": "user_message", "user_name": "text", "user_email": "email", "message": "text"}
+  }
+}
