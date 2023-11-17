@@ -32,5 +32,6 @@ def get_form(request):
         return JsonResponse(request_form, safe=False)
 
     data = DB.search(Query().fragment(search_fragment))
+    template_name = data[0]['template_name']
 
-    return JsonResponse(data, safe=False)
+    return JsonResponse(template_name, safe=False)
