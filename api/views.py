@@ -1,8 +1,13 @@
-from django.views.decorators.csrf import csrf_exempt
+from rest_framework import serializers
 from rest_framework.decorators import api_view
+from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 from environs import Env
 from tinydb import TinyDB, Query
+from phonenumbers import parse, is_valid_number
+from phonenumbers.phonenumberutil import NumberParseException
 
 
 env = Env()
@@ -10,11 +15,54 @@ env.read_env()
 DB = TinyDB(env('TINYDB_FILE'))
 
 
-# class MySerializer(serializers.Serializer):
+class DataSerializer(serializers.Serializer):
+    data = serializers.CharField()
+
+    def validate_data(self, value):
+        if self.is_valid_date(value):
+            return "date"
+        elif self.is_valid_phone_number(value):
+            return "phone"
+        elif self.is_valid_email(value):
+            return "email"
+        else:
+            return "text"
+
+    def is_valid_date(self, value):
+        try:
+            serializers.DateField().to_internal_value(value)
+            return True
+        except serializers.ValidationError:
+            return False
+
+    def is_valid_phone_number(self, value):
+        try:
+            parsed_number = parse(value)
+            return is_valid_number(parsed_number)
+        except NumberParseException:
+            return False
+
+    def is_valid_email(self, value):
+        try:
+            validate_email(value)
+            return True
+        except ValidationError:
+            return False
+
 
 @csrf_exempt
 @api_view(['POST'])
 def get_form(request):
     request_body_data = request.data
-    data = DB.search(Query().fragment(request_body_data))
+    request_form = {}
+    serializer = DataSerializer()
+
+    for field in request_body_data:
+        request_form[field] = serializer.validate_data(request_body_data[field])
+
+    for field in request_form.copy():
+        if not DB.search(Query()[field].exists()):
+            request_form.pop(field)
+
+    data = DB.search(Query().fragment(request_form))
     return JsonResponse(data, safe=False)

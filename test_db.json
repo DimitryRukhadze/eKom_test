@@ -1,6 +1,8 @@
 {
   "_default": {
-    "1": {"template_name": "new_user_register", "user_name": "text", "new_user_email": "email", "new_user_phone": "phone"},
-    "2": {"template_name": "user_message", "user_name": "text", "user_email": "email", "message": "text"}
+    "1": {"template_name": "new_user_register", "new_user_name": "text", "new_user_email": "email", "new_user_phone": "phone"},
+    "2": {"template_name": "new_message", "user_author": "text", "author_email": "email", "message": "text"},
+    "3": {"template_name": "call_back_user", "user_to_call":  "text", "call_back_phone":  "phone"},
+    "4": {"template_name": "call_description", "call_phone_number": "phone", "description": "text"}
   }
 }

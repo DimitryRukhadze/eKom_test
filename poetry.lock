@@ -102,6 +102,17 @@ files = [
 ]
 
 [[package]]
+name = "phonenumbers"
+version = "8.13.25"
+description = "Python version of Google's common library for parsing, formatting, storing and validating international phone numbers."
+optional = false
+python-versions = "*"
+files = [
+    {file = "phonenumbers-8.13.25-py2.py3-none-any.whl", hash = "sha256:7a57cceb8145d3099a0cda7a1f2581b6829936069224790be5de0adf14b39f13"},
+    {file = "phonenumbers-8.13.25.tar.gz", hash = "sha256:4ae2d2e253a4752a269ae1147822b9aa500f14b2506a91f884e68b136901f128"},
+]
+
+[[package]]
 name = "python-dotenv"
 version = "1.0.0"
 description = "Read key-value pairs from a .env file and set them as environment variables"
@@ -167,4 +178,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "d6973061d25bfd75d74f2aad2e219b95523e86cb7af3c045489ede4c926a82a3"
+content-hash = "88dd5f8da9d55606e591dbd9948fe6fc8e0306f188ac8fba9bec2e93026eaed7"
