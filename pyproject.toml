@@ -12,6 +12,7 @@ tinydb = "^4.8.0"
 djangorestframework = "^3.14.0"
 environs = "^9.5.0"
 phonenumbers = "^8.13.25"
+python-dateutil = "^2.8.2"
 
 
 [build-system]

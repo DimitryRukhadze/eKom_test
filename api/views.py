@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from dateutil import parser as dateparse
 from environs import Env
 from tinydb import TinyDB, Query
 from phonenumbers import parse, is_valid_number
@@ -30,9 +31,9 @@ class DataSerializer(serializers.Serializer):
 
     def is_valid_date(self, value):
         try:
-            serializers.DateField().to_internal_value(value)
+            dateparse.parse(value)
             return True
-        except serializers.ValidationError:
+        except (ValueError, OverflowError):
             return False
 
     def is_valid_phone_number(self, value):
