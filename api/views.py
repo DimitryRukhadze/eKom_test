@@ -60,9 +60,15 @@ def get_form(request):
     for field in request_body_data:
         request_form[field] = serializer.validate_data(request_body_data[field])
 
-    for field in request_form.copy():
-        if not DB.search(Query()[field].exists()):
-            request_form.pop(field)
+    search_fragment = {
+        key: value
+        for key, value in request_form.items()
+        if DB.search((Query()[key].exists()) & (Query()[key] == value))
+    }
 
-    data = DB.search(Query().fragment(request_form))
+    if not search_fragment:
+        return JsonResponse(request_form, safe=False)
+
+    data = DB.search(Query().fragment(search_fragment))
+
     return JsonResponse(data, safe=False)
